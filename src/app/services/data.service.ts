@@ -3,6 +3,7 @@ import {BehaviorSubject} from 'rxjs';
 import {Issue} from '../models/issue';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Http, Response } from '@angular/http';
+import { environment } from '../../environments/environment'
 import 'rxjs/add/operator/map';
 // tslint:disable-next-line:import-blacklist
 import 'rxjs/Rx';
@@ -39,7 +40,7 @@ export class DataService {
   }
 
   getTest() {
-    return this._http.get('http://localhost:8080/example/v1/hotels')
+    return this._http.get(environment.ApiUrl)
        .map((res: Response) => res.json());
 }
 
@@ -55,7 +56,8 @@ export class DataService {
     const dataObject = {requestId: requestId, application: application, component: component,
       feature: feature,  isOn: isOn};
     console.log('Issue content:  ' + this.dialogData);
-    this._http.post('http://localhost:8080/example/v1/hotels', dataObject).subscribe({
+    console.log(environment.ApiUrl);
+    this._http.post(environment.ApiUrl, dataObject).subscribe({
       // next: data => this.postId = data.id,
       error: error => console.error('There was an error!', error)
   });
@@ -71,7 +73,7 @@ export class DataService {
     const isOn = this.dialogData['isOn']; 
     const dataObject = {id: id, application: application, component: component, feature: feature, isOn: isOn};
     console.log('Issue content:  ' + this.dialogData);
-    this._http.put('http://localhost:8080/example/v1/hotels/' + id, dataObject).subscribe({
+    this._http.put(environment.ApiUrl + '/' + id, dataObject).subscribe({
       error: error => console.error('There was an error!', error)
   });
   }
