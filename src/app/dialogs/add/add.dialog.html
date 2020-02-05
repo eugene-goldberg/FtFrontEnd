@@ -5,8 +5,8 @@
 
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput #input class="form-control" placeholder="Request Id" [(ngModel)]="data.requestId" name="requestId" required >
-        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        <input matInput #input class="form-control" placeholder="Request Id" [(ngModel)]="data.id" name="requestId" >
+        <!-- <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error> -->
       </mat-form-field>
     </div>
 

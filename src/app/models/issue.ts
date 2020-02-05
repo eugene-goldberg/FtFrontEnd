@@ -1,5 +1,5 @@
 export class Issue {
-  requestId: number;
+  id: number;
   application: string;
   component: string;
   feature: string;

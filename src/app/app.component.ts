@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
-  requestId: number;
+  id: number;
   myDs: any;
 
   constructor(public httpClient: HttpClient,
@@ -80,13 +80,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  startEdit(i: number, requestId: number, application: string, component: string, feature: string, isOn: boolean) {
-    this.requestId = requestId;
+  startEdit(i: number, id: number, application: string, component: string, feature: string, isOn: boolean) {
+    this.id = id;
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: {requestId: requestId, application: application, component: component, isOn: isOn}
+      data: {id: id, application: application, component: component, feature: feature, isOn: isOn}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -113,16 +113,16 @@ export class AppComponent implements OnInit {
     });
   }
 
-  deleteItem(i: number, requestId: number, application: string, component: string, feature: string, isOn: boolean) {
+  deleteItem(i: number, id: number, application: string, component: string, feature: string, isOn: boolean) {
     this.index = i;
-    this.requestId = requestId;
+    this.id = id;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {requestId: requestId, application: application, component: component, isOn: isOn}
+      data: {id: id, application: application, component: component, isOn: isOn}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.requestId === this.requestId);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
@@ -209,7 +209,7 @@ export class ExampleDataSource extends DataSource<Issue> {
     return merge(...displayDataChanges).pipe(map( () => {
         // Filter data
         this.filteredData = this._exampleDatabase.data.slice().filter((issue: Issue) => {
-          const searchStr = (issue.requestId + issue.application.toLowerCase());
+          const searchStr = (issue.id + issue.application.toLowerCase());
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
 
@@ -238,7 +238,7 @@ export class ExampleDataSource extends DataSource<Issue> {
       let propertyB: number | string = '';
 
       switch (this._sort.active) {
-        case 'requestId': [propertyA, propertyB] = [a.requestId, b.requestId]; break;
+        case 'requestId': [propertyA, propertyB] = [a.id, b.id]; break;
         case 'title': [propertyA, propertyB] = [a.application, b.application]; break;
         case 'state': [propertyA, propertyB] = [a.component, b.component]; break;
         case 'url': [propertyA, propertyB] = [a.feature, b.feature]; break;

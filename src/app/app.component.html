@@ -23,7 +23,7 @@
     <!-- ID Column -->
     <ng-container matColumnDef="requestId">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Request ID</mat-header-cell>
-      <mat-cell *matCellDef="let row" >{{row.requestId}}</mat-cell>
+      <mat-cell *matCellDef="let row" >{{row.id}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="application">
@@ -72,11 +72,11 @@
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.name, row.state, row.isAvailable, row.url, row.created_at, row.updated_at)">
+        <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.application, row.component, row.feature, row.isOn)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.name, row.state, row.url)">
+        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.application, row.component, row.feature, row.isOn)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
